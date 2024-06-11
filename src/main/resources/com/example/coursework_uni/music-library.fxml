@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="559.0" prefWidth="450.0" style="-fx-background-color: #6987CA;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.coursework_uni.MusicLibraryController">
+    <VBox prefHeight="310.0" prefWidth="450.0" spacing="10">
+        <TableView fx:id="tableView" prefHeight="300.0" prefWidth="568.0" style="-fx-background-color: #ffff;">
+            <columns>
+                <TableColumn fx:id="artistColumn" editable="false" prefWidth="116.0" style="-fx-background-color: DEE7FF; -fx-border-color: #BDCFF8; -fx-border-radius: 2; -fx-border-width: 0.5;" text="Виконавець" />
+                <TableColumn fx:id="titleColumn" prefWidth="113.0" style="-fx-background-color: E6EDFF; -fx-border-color: #BDCFF8; -fx-border-radius: 2; -fx-border-width: 0.5;" text="Назва альбому" />
+                <TableColumn fx:id="trackColumn" prefWidth="112.0" style="-fx-background-color: EDF2FF; -fx-border-color: #BDCFF8; -fx-border-radius: 2; -fx-border-width: 0.5;" text="Композиція" />
+            <TableColumn fx:id="durationColumn" prefWidth="108.0" style="-fx-background-color: F4F7FF; -fx-border-color: #BDCFF8; -fx-border-radius: 2; -fx-border-width: 0.5;" text="Тривалість" />
+            </columns>
+        </TableView>
+        <HBox prefWidth="797.0" spacing="10" />
+    </VBox>
+   <Label layoutX="35.0" layoutY="320.0" text="Виконавець:" textFill="WHITE">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+      <Label layoutX="35.0" layoutY="355.0" text="Назва альбому:" textFill="#fcfcfc">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+      <Label layoutX="35.0" layoutY="390.0" text="Композиція:" textFill="#fcfcfc">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
+   <Label layoutX="35.0" layoutY="425.0" text="Тривалість:" textFill="#fcfcfc">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
+      <TextField fx:id="artistField" layoutX="200.0" layoutY="315.0" prefHeight="26.0" prefWidth="212.0" style="-fx-background-radius: 5;">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font></TextField>
+      <TextField fx:id="titleField" layoutX="200.0" layoutY="350.0" prefHeight="26.0" prefWidth="212.0" style="-fx-background-radius: 5;">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font></TextField>
+      <TextField fx:id="trackField" layoutX="200.0" layoutY="385.0" prefHeight="26.0" prefWidth="212.0" style="-fx-background-radius: 5;">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font></TextField>
+   <TextField fx:id="durationField" layoutX="200.0" layoutY="420.0" prefHeight="26.0" prefWidth="212.0" style="-fx-background-radius: 5;">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font></TextField>
+      <Button fx:id="addButton" layoutX="144.0" layoutY="470.0" onAction="#addComposition" prefHeight="27.0" prefWidth="163.0" style="-fx-background-color: #ffff; -fx-background-radius: 7; -fx-effect: lighting;" text="Додати композицію">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font>
+   </Button>
+   <Button fx:id="deleterecordButton" layoutX="143.0" layoutY="511.0" onAction="#addComposition" prefHeight="27.0" prefWidth="163.0" style="-fx-background-color: #ffff; -fx-background-radius: 7; -fx-effect: blur;" text="Вилучити композицію">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font>
+   </Button>
+</AnchorPane>
