@@ -21,4 +21,3 @@ public class MusicLibraryApp extends Application {
         launch();
     }
 }
-

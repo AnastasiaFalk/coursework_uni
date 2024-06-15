@@ -7,6 +7,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -39,7 +40,7 @@ public class MusicLibraryController implements Initializable {
     private TableColumn<Music, String> trackColumn;
 
     @FXML
-    private TableColumn<Music, String> durationColumn;
+    private TableColumn<Music, Double> durationColumn;
 
     @FXML
     public TextField artistField;
@@ -55,21 +56,43 @@ public class MusicLibraryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Ініціалізація стовпців
+        // ініціалізація стовпців
         artistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         trackColumn.setCellValueFactory(new PropertyValueFactory<>("track"));
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
 
-        // Приєднання до бази даних PostgreSQL
+        // приєднання до бази даних PostgresSQL
         try {
             connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/MusicLibrary", "anastasiafalk", "anastasiafalk");
+            loadMusicData(); // завантаження даних з бази
         } catch (SQLException e) {
-            System.out.println("Помилка під'єднання до бази даних");
+            System.out.println("Помилка під'єднання до бази даних.");
             e.printStackTrace();
         }
 
         deleterecordButton.setOnAction(e -> deleteRecord());
+    }
+
+    // завантаження музичних записів з бази даних до таблиці при повторному відкритті програми
+    private void loadMusicData() {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT artist, title, track, duration FROM music");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String artist = resultSet.getString("artist");
+                String title = resultSet.getString("title");
+                String track = resultSet.getString("track");
+                double duration = resultSet.getDouble("duration");
+
+                Music music = new Music(artist, title, track, duration);
+                tableView.getItems().add(music);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error loading data from the database");
+            e.printStackTrace();
+        }
     }
 
     public void addComposition() {
@@ -80,10 +103,10 @@ public class MusicLibraryController implements Initializable {
 
         Music newMusic = new Music(artist, title, track, duration);
 
-        // Додати нову композицію в таблицю
+        // додати нову композицію в таблицю
         tableView.getItems().add(newMusic);
 
-        // Додати нову композицію в базу даних
+        // додати нову композицію в базу даних
         try {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO music (artist, title, track, duration) VALUES (?, ?, ?, ?)");
             statement.setString(1, artist);
@@ -92,11 +115,11 @@ public class MusicLibraryController implements Initializable {
             statement.setDouble(4, duration);
             statement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Помилка додавання даних до бази");
+            System.out.println("Error adding data to the database");
             e.printStackTrace();
         }
 
-        // Очищення полів
+        // очищення полів для вводу
         artistField.clear();
         titleField.clear();
         trackField.clear();
@@ -113,6 +136,7 @@ public class MusicLibraryController implements Initializable {
             e.printStackTrace();
         }
     }
+
     public void deleteRecord() {
         Music selectedMusic = tableView.getSelectionModel().getSelectedItem();
 
@@ -144,4 +168,5 @@ public class MusicLibraryController implements Initializable {
             }
         }
     }
+
 }
